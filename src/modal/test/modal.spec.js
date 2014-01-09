@@ -229,7 +229,6 @@ describe('$modal', function () {
       expect($document).toHaveModalOpenWithContent('Content', 'div');
       expect($document).not.toHaveBackdrop();
     });
-
   });
 
   describe('option by option', function () {
@@ -486,6 +485,20 @@ describe('$modal', function () {
 
       dismiss(modal2);
       expect(body).not.toHaveClass('modal-open');
+    });
+
+    it('should close all open modals on $locationChangeSuccess', function () {
+      var modal1 = open({template: '<div>Modal1</div>'});
+      var modal2 = open({template: '<div>Modal2</div>'});
+
+      $rootScope.$digest();
+      expect($document).toHaveModalsOpen(2);
+
+      $rootScope.$broadcast('$locationChangeSuccess');
+      $timeout.flush();
+      $rootScope.$digest();
+
+      expect($document).toHaveModalsOpen(0);
     });
   });
 });

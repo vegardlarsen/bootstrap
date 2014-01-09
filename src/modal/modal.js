@@ -132,6 +132,14 @@ angular.module('ui.bootstrap.modal', ['ui.bootstrap.transition'])
         }
       });
 
+      $rootScope.$on('$locationChangeSuccess', function () {
+        var topModal = $modalStack.getTop();
+        while (topModal) {
+          $modalStack.dismiss(topModal.key, '$locationChangeSuccess');
+          topModal = $modalStack.getTop();
+        }
+      });
+
       function removeModalWindow(modalInstance) {
 
         var body = $document.find('body').eq(0);
