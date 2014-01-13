@@ -17,9 +17,18 @@ angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['
       closeMenu   = angular.noop;
   return {
     restrict: 'CA',
+    scope: {
+      keepOnMenuClick: '='
+    },
     link: function(scope, element, attrs) {
       scope.$watch('$location.path', function() { closeMenu(); });
       element.parent().bind('click', function() { closeMenu(); });
+      element.parent().find('.dropdown-menu').bind('click', function(event) {
+          if (!!scope.keepOnMenuClick) {
+              event.preventDefault();
+              event.stopPropagation();
+          }
+      });
       element.bind('click', function (event) {
 
         var elementWasOpen = (element === openElement);

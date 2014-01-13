@@ -63,5 +63,19 @@ describe('dropdownToggle', function() {
     expect(elm1.hasClass('open')).toBe(false);
     expect(elm2.hasClass('open')).toBe(true);
   });
+
+  it('should allow keeping a dropdown open when a link is clicked', function() {
+    var elm = $compile('<li class="dropdown"><a dropdown-toggle></a><ul dropdown-toggle keep-on-menu-click="true"><li>Hello</li></ul><ul class="dropdown-menu"><li><a href="">World</a></li></ul></li>')($rootScope);
+    elm.children('a').click();
+    elm.find('.dropdown-menu a').click();
+    expect(elm.hasClass('open')).toBe(true);
+  });
+
+  it('should close on click of child element', function() {
+    var elm = $compile('<li class="dropdown"><a dropdown-toggle></a><ul dropdown-toggle><li>Hello</li></ul><ul class="dropdown-menu"><li><a href="">World</a></li></ul></li>')($rootScope);
+    elm.children('a').click();
+    elm.find('.dropdown-menu a').click();
+    expect(elm.hasClass('open')).toBe(false);
+  });
 });
   
