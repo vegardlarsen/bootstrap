@@ -24,7 +24,7 @@ angular.module('ui.bootstrap.dropdownToggle', []).directive('dropdownToggle', ['
       scope.$watch('$location.path', function() { closeMenu(); });
       element.parent().bind('click', function() { closeMenu(); });
       element.parent().find('.dropdown-menu').bind('click', function(event) {
-          if (!!scope.keepOnMenuClick) {
+          if (!!scope.keepOnMenuClick && !$(event.target).is(':button,:submit,a')) {
               event.preventDefault();
               event.stopPropagation();
           }
